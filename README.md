@@ -1,2 +1,2 @@
 # palm-denoisers
-Interfacing several denoisers for SMLM
+Interfacing deep learning based several denoisers for SMLM.
