@@ -129,9 +129,8 @@ celerybeat.pid
 
 # Environments
 .env
-.palmdenoisers_env
+.idea
 .venv
-palmdenoisers_env/
 env/
 venv/
 ENV/

@@ -1,7 +1,5 @@
 # Dépendances du module
 colorama      # Permet l'affichage de la couleur dans la console
-numpy         # Bibliothèque basique de python
-pandas        # Bibliothèque nécessaire pour plotly
 
 # Dépendances pour les Tests (pytest et ses "plugins")
 pytest
@@ -17,5 +15,13 @@ sphinx-rtd-theme
 ansi2html     # Convertisseur ANSI vers HTML
 
 # Dépendances de python-tracer installées avec pip
-aydin
-csbdeep
+csbdeep==0.8.1
+h5py==3.0.0
+numpy<2
+scipy
+pandas
+
+aydin==0.1.15
+imageio==2.21.1
+scikit-image==0.18.3
+tensorflow<2.11
