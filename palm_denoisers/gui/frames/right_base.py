@@ -7,11 +7,13 @@ from PIL import Image
 class RightBaseFrame(ctk.CTkFrame):
     def __init__(self, parent, title: str, unsupervised=False):
         super().__init__(parent, width=400)
-
+        
         self.network_label = ctk.CTkLabel(self, text=title, font=("Arial", 16, "bold"))
         self.network_label.pack(pady=5)
 
-        # --- Boutons images ---
+        self.image_paths = {"low": None, "high": None}
+
+        # Image loading buttons
         hl_frame = ctk.CTkFrame(self, fg_color="transparent")
         hl_frame.pack(pady=5)
 
@@ -28,21 +30,20 @@ class RightBaseFrame(ctk.CTkFrame):
             self.low_image_button.pack(side="left", padx=5)
             self.low_image_button.configure(command=lambda: self.load_and_show_image("low"))
 
-        # Parameters
+        # Pixel Alignement
+        self.alignment_button = ctk.CTkButton(self, text="Perform Sub-Pixel Alignment")
+        self.alignment_button.pack(pady=20, fill="x")
+
+        # Model selection
         self.params_frame = ctk.CTkFrame(self, fg_color="transparent")
         self.params_frame.pack(pady=10, fill="both", expand=True)
 
-        # Customize button
-        # self.customize_button = ctk.CTkButton(self, text="PERSONALISER RESEAU")
-        # self.customize_button.pack(pady=5)
-
-        # self.preview_button = ctk.CTkButton(self, text="PREVIEW")
-        # self.preview_button.pack(pady=5)
+        
 
 
     def load_and_show_image(self, image_type="low"):
         """
-        Load an image file and display it using matplotlib.
+        Load an image file, display it with matplotlib, and store its path.
         """
         file_path = filedialog.askopenfilename(
             title=f"Select {image_type.upper()} IMAGE",
@@ -50,9 +51,14 @@ class RightBaseFrame(ctk.CTkFrame):
         )
         if not file_path:
             return
-        
+
+        # Stocker le chemin du fichier
+        self.image_paths[image_type] = file_path
+        print(f"{image_type.upper()} image loaded: {file_path}")
+
+        # Afficher l'image
         img = Image.open(file_path)
         plt.figure(f"{image_type.upper()} IMAGE")
-        plt.imshow(img, cmap="gray")  # ou cmap="viridis" si tu veux
+        plt.imshow(img, cmap="gray")
         plt.axis("off")
         plt.show()
