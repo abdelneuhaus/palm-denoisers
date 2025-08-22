@@ -39,13 +39,13 @@ class LeftFrame(ctk.CTkFrame):
 
         self.noise2self_button = ctk.CTkButton(
             method_frame, text="NOISE2SELF-CB", width=150, height=100,
-            command=lambda: self.controller.show_right_frame("Noise2Self-CB")
+            command=self.launch_noise2self, state="disabled"
         )
         self.noise2self_button.pack(pady=10)
 
         self.care2d_button = ctk.CTkButton(
             method_frame, text="2D CARE", width=150, height=100,
-            command=lambda: self.controller.show_right_frame("2D CARE")
+            command=self.launch_care2d, state="disabled"
         )
         self.care2d_button.pack(pady=10)
 
@@ -64,24 +64,34 @@ class LeftFrame(ctk.CTkFrame):
         project_name = self.project_name_entry.get().strip()
         if project_name:
             os.makedirs(project_name, exist_ok=True)
-            high_path = os.path.join(project_name, "data", "Training", "High")
-            low_path = os.path.join(project_name, "data", "Training", "Low")
-            os.makedirs(high_path, exist_ok=True)
-            os.makedirs(low_path, exist_ok=True)
-
             self.save_folder = project_name
             print(f"Folder created: {project_name}")
-            print(f"Subfolders created: {high_path}, {low_path}")
+            self.update_denoising_buttons()
+        else:
+            print("Please enter a valid project name.")
 
     def select_folder(self):
         folder = filedialog.askdirectory()
         if folder:
             self.save_folder = folder
-            data_training_path = os.path.join(folder, "data", "Training")
-            high_path = os.path.join(data_training_path, "High")
-            low_path = os.path.join(data_training_path, "Low")
-            os.makedirs(high_path, exist_ok=True)
-            os.makedirs(low_path, exist_ok=True)
-
             print(f"Selected folder: {folder}")
-            print(f"Checked/created subfolders: {high_path}, {low_path}")
+            self.update_denoising_buttons()
+
+    def update_denoising_buttons(self):
+        """Active ou désactive les boutons selon que save_folder soit défini."""
+        state = "normal" if self.save_folder else "disabled"
+        self.noise2self_button.configure(state=state)
+        self.care2d_button.configure(state=state)
+
+    # Callbacks to activate denoising algo buttons
+    def launch_noise2self(self):
+        if self.save_folder:
+            self.controller.show_right_frame("Noise2Self-CB")
+        else:
+            print("Please create or select a project folder first!")
+
+    def launch_care2d(self):
+        if self.save_folder:
+            self.controller.show_right_frame("2D CARE", project_name=self.save_folder)
+        else:
+            print("Please create or select a project folder first!")

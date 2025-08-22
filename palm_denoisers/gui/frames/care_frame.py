@@ -50,6 +50,64 @@ class Care2DFrame(RightBaseFrame):
         self.selected_model.set(model_name)
         self.model_params_memory[model_name] = self.models[model_name].copy()
 
+    
+    def load_and_show_image_2dcare(self, image_type="low"):
+        """
+        Load a 3D image stack, display a slider for preview, and split slices into High/Low folders
+        if it's 2D CARE.
+        """
+        file_path = filedialog.askopenfilename(
+            title=f"Select {image_type.upper()} IMAGE",
+            filetypes=[("Image Files", "*.tif *.tiff *.stk")]
+        )
+        if not file_path:
+            return
+
+        # Stocker le chemin du fichier
+        self.image_paths[image_type] = file_path
+        print(f"{image_type.upper()} image loaded: {file_path}")
+
+        # Lire la stack avec tifffile
+        stack = tifffile.imread(file_path)
+        total_slices = stack.shape[0]
+        end_idx = max(1, int(total_slices * 0.2))  # 20% pour la prévisualisation
+
+        # --- Slider pour visualiser les slices ---
+        slices_preview = stack[:end_idx]
+
+        fig, ax = plt.subplots()
+        plt.subplots_adjust(bottom=0.2)
+        l = ax.imshow(slices_preview[0], cmap="gray")
+        ax.axis("off")
+
+        ax_slider = plt.axes([0.2, 0.05, 0.6, 0.03])
+        slider = Slider(ax_slider, 'Slice', 0, len(slices_preview)-1, valinit=0, valstep=1)
+
+        def update(val):
+            idx = int(slider.val)
+            l.set_data(slices_preview[idx])
+            fig.canvas.draw_idle()
+
+        slider.on_changed(update)
+        plt.show()
+
+        # --- Sauvegarder les slices si c'est 2D CARE ---
+        if isinstance(self, Care2DFrame):  # ou autre moyen de vérifier le type
+            base_folder = os.path.join(self.save_folder, "data", "Training")
+            subfolder = "High" if image_type == "high" else "Low"
+            save_path = os.path.join(base_folder, subfolder)
+
+            # Créer le dossier si nécessaire
+            os.makedirs(save_path, exist_ok=True)
+
+            # Sauvegarder chaque slice
+            for i in range(total_slices):
+                filename = f"Training_{i:04d}.tif"
+                tifffile.imwrite(os.path.join(save_path, filename), stack[i])
+            print(f"{total_slices} slices saved to {save_path}")
+
+
+
     def launch_preprocessing(self):
         model_name = self.selected_model.get()
         img_shape = tiff.imread(self.image_paths["low"]).shape[1]
