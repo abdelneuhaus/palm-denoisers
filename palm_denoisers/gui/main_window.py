@@ -15,7 +15,7 @@ class App(ctk.CTk):
         self.right_frame = None
 
 
-    def show_right_frame(self, frame_type: str, project_name: str = "default_project"):
+    def show_right_frame(self, frame_type: str, project_name: str = None):
         if not hasattr(self, 'frames'):
             self.frames = {}
         if frame_type not in self.frames:
@@ -23,11 +23,11 @@ class App(ctk.CTk):
                 self.frames[frame_type] = Noise2SelfFrame(self)
             elif frame_type == "2D CARE":
                 self.frames[frame_type] = Care2DFrame(self)
+                self.frames[frame_type].set_project(project_name)
                 high_path = os.path.join(project_name, "data", "Training", "High")
                 low_path = os.path.join(project_name, "data", "Training", "Low")
                 os.makedirs(high_path, exist_ok=True)
                 os.makedirs(low_path, exist_ok=True)
-                print(f"Subfolders created: {high_path}, {low_path}")
         for f in self.frames.values():
             f.pack_forget()
 
