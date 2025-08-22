@@ -1,6 +1,9 @@
-import customtkinter as ctk
-from tkinter import filedialog
 import os
+import sys
+import customtkinter as ctk
+
+from tkinter import filedialog
+from palm_denoisers.gui.console import Console
 
 
 class LeftFrame(ctk.CTkFrame):
@@ -12,7 +15,6 @@ class LeftFrame(ctk.CTkFrame):
         # Config
         config_frame = ctk.CTkFrame(self, fg_color="transparent", border_width=1, corner_radius=5)
         config_frame.pack(pady=10, padx=10, fill="x")
-
         config_label = ctk.CTkLabel(config_frame, text="Configuration", font=("Arial", 12, "bold"))
         config_label.pack(anchor="w", padx=5, pady=(5,2))
 
@@ -47,17 +49,39 @@ class LeftFrame(ctk.CTkFrame):
         )
         self.care2d_button.pack(pady=10)
 
+        # Console widget
+        console_frame = ctk.CTkFrame(self, fg_color="transparent", border_width=1, corner_radius=5)
+        console_frame.pack(pady=10, padx=10, fill="both", expand=True)
+        console_label = ctk.CTkLabel(console_frame, text="Console", font=("Arial", 12, "bold"))
+        console_label.pack(anchor="w", padx=5, pady=(5,2))
+        self.console = Console(console_frame, height=150)
+        self.console.pack(fill="both", expand=True, padx=5, pady=5)
+        sys.stdout = self.console
+        sys.stderr = self.console
+
 
     def create_folder(self):
         project_name = self.project_name_entry.get().strip()
         if project_name:
             os.makedirs(project_name, exist_ok=True)
-            self.save_folder = project_name
-            print(f"Dossier créé : {project_name}")
+            high_path = os.path.join(project_name, "data", "Training", "High")
+            low_path = os.path.join(project_name, "data", "Training", "Low")
+            os.makedirs(high_path, exist_ok=True)
+            os.makedirs(low_path, exist_ok=True)
 
+            self.save_folder = project_name
+            print(f"Folder created: {project_name}")
+            print(f"Subfolders created: {high_path}, {low_path}")
 
     def select_folder(self):
         folder = filedialog.askdirectory()
         if folder:
             self.save_folder = folder
-            print(f"Dossier sélectionné : {folder}")
+            data_training_path = os.path.join(folder, "data", "Training")
+            high_path = os.path.join(data_training_path, "High")
+            low_path = os.path.join(data_training_path, "Low")
+            os.makedirs(high_path, exist_ok=True)
+            os.makedirs(low_path, exist_ok=True)
+
+            print(f"Selected folder: {folder}")
+            print(f"Checked/created subfolders: {high_path}, {low_path}")

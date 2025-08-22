@@ -1,5 +1,8 @@
 import customtkinter as ctk
+import tifffile as tiff
+
 from .right_base import RightBaseFrame
+from palm_denoisers.care.preprocessing import preprocessing
 
 
 class Care2DFrame(RightBaseFrame):
@@ -17,6 +20,7 @@ class Care2DFrame(RightBaseFrame):
         }
         self.model_params_memory = {}
 
+        # Network architecture selection
         dropdown_frame = ctk.CTkFrame(self.params_frame, fg_color="transparent")
         dropdown_frame.pack(pady=5, fill="x")
         label = ctk.CTkLabel(dropdown_frame, text="Select a Network Architecture")
@@ -31,7 +35,26 @@ class Care2DFrame(RightBaseFrame):
         )
         self.model_dropdown.pack(pady=0)
 
+        # Data Preprocessing Options
+        self.preprocessing_button = ctk.CTkButton(self, text="Data Preparation", fg_color="#4CAF50", hover_color="#45A049")
+        self.preprocessing_button.pack(pady=10, fill="x")
+        self.preprocessing_button.configure(command=self.launch_preprocessing)
     
+        # Launch training button
+        self.train_button = ctk.CTkButton(self, text="Launch Training", fg_color="#4CAF50", hover_color="#45A049")
+        self.train_button.pack(pady=10, fill="x")
+        self.train_button.configure(command=self.launch_training)
+
+
     def select_model(self, model_name):
         self.selected_model.set(model_name)
         self.model_params_memory[model_name] = self.models[model_name].copy()
+
+    def launch_preprocessing(self):
+        model_name = self.selected_model.get()
+        img_shape = tiff.imread(self.image_paths["low"]).shape[1]
+        preprocessing(self.save_folder, patch_size=img_shape, patches_per_image=1, save_file=str(self.save_folder+"/model_data.npz"))
+        print(str(self.save_folder+"/model_data.npz"), img_shape)
+
+    def launch_training(self):
+        model_name = self.selected_model.get()

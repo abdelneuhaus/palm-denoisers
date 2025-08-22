@@ -1,20 +1,20 @@
 import customtkinter as ctk
 from .frames import LeftFrame, Noise2SelfFrame, Care2DFrame
 
-
 class App(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("PALM Denoisers Interface")
-        self.geometry("400x600")
-        self.minsize(400, 600)
+        self.geometry("400x700")
+        self.minsize(400, 700)
 
         # Left side
         self.left_frame = LeftFrame(self, controller=self)
         self.left_frame.pack(side="left", fill="both", expand=True, padx=10, pady=10)
-
+        
         # Right side
         self.right_frame = None
+
 
     def show_right_frame(self, frame_type: str):
         if not hasattr(self, 'frames'):

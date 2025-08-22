@@ -1,5 +1,8 @@
 import customtkinter as ctk
 import matplotlib.pyplot as plt
+import numpy as np
+
+from matplotlib.widgets import Slider
 from tkinter import filedialog
 from PIL import Image
 
@@ -10,7 +13,6 @@ class RightBaseFrame(ctk.CTkFrame):
         
         self.network_label = ctk.CTkLabel(self, text=title, font=("Arial", 16, "bold"))
         self.network_label.pack(pady=5)
-
         self.image_paths = {"low": None, "high": None}
 
         # Image loading buttons
@@ -52,13 +54,34 @@ class RightBaseFrame(ctk.CTkFrame):
         if not file_path:
             return
 
-        # Stocker le chemin du fichier
-        self.image_paths[image_type] = file_path
-        print(f"{image_type.upper()} image loaded: {file_path}")
-
-        # Afficher l'image
         img = Image.open(file_path)
-        plt.figure(f"{image_type.upper()} IMAGE")
-        plt.imshow(img, cmap="gray")
-        plt.axis("off")
+        slices = []
+        try:
+            i = 0
+            while True:
+                slices.append(np.array(img))
+                i += 1
+                img.seek(i)
+        except EOFError:
+            pass
+
+        total_slices = len(slices)
+        end_idx = int(total_slices * 0.2)   # show 20% of the stack
+        slices = slices[:end_idx]
+
+        fig, ax = plt.subplots()
+        plt.subplots_adjust(bottom=0.2)  # let space for slide
+        l = ax.imshow(slices[0])#, cmap=cmap)
+        ax.axis("off")
+
+        # Slider
+        ax_slider = plt.axes([0.2, 0.05, 0.6, 0.03])  # x, y, width, height
+        slider = Slider(ax_slider, 'Slice', 0, len(slices)-1, valinit=0, valstep=1)
+
+        def update(val):
+            idx = int(slider.val)
+            l.set_data(slices[idx])
+            fig.canvas.draw_idle()
+
+        slider.on_changed(update)
         plt.show()
