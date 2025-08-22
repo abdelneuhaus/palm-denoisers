@@ -14,14 +14,14 @@ sphinx-autobuild
 sphinx-rtd-theme
 ansi2html     # Convertisseur ANSI vers HTML
 
-# Dépendances de python-tracer installées avec pip
+# Dépendances de palm-denoisers installées avec pip
 csbdeep==0.8.1
 h5py==3.0.0
 numpy<2
 scipy
 pandas
-
 aydin==0.1.15
 imageio==2.21.1
 scikit-image==0.18.3
 tensorflow<2.11
+customtkinter
