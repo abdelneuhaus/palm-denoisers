@@ -172,3 +172,9 @@ cython_debug/
 .pypirc
 
 reports/
+
+
+# Local tests
+./local
+/local/*
+local
