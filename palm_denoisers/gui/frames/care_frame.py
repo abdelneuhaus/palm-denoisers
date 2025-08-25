@@ -1,14 +1,10 @@
 import os
 import threading
-
 import customtkinter as ctk
 import tifffile as tiff
-import matplotlib.pyplot as plt
 
-from matplotlib.widgets import Slider
-from tkinter import filedialog
 from .right_base import RightBaseFrame
-from palm_denoisers.care.preprocessing import launch_preprocessing_thread
+from palm_denoisers.care.preprocessing import launch_preprocessing_process, show_some_patches
 
 
 class Care2DFrame(RightBaseFrame):
@@ -94,19 +90,32 @@ class Care2DFrame(RightBaseFrame):
                 tiff.imwrite(os.path.join(save_path, f"Training_{i:04d}.tif"), stack[i])
                 if i % 500 == 0 or i == total_slices - 1:
                     print(f"{image_type}: {i+1}/{total_slices} frames saved.")
-            if callback:
-                self.after(0, callback) 
+        if callback:
+            self.after(0, callback)
 
     def launch_preprocessing(self):
         def run_preprocessing():
             img_shape = tiff.imread(self.image_paths["low"]).shape[1]
             print("Launching preprocessing...")
-            launch_preprocessing_thread(str(self.project_name+"/data/Training/"),
-                        patch_size=img_shape,
-                        patches_per_image=1,
-                        save_file=str(self.project_name+"/model_data.npz"))
-            print("Preprocessing done.")
+
+            def preprocessing_callback(result):
+                print("Preprocessing finished.")
+                print("Patch shapes:", result["shape"])
+                show_some_patches(result["preview_X"], result["preview_Y"], result["axes"])
+
+            # root is self because is the main tkinter window
+            launch_preprocessing_process(
+                project_folder=str(self.project_name + "/data/Training/"),
+                patch_size=img_shape,
+                patches_per_image=1,
+                save_file=str(self.project_name + "/model_data.npz"),
+                callback=preprocessing_callback,
+                root=self
+            )
+
+        # we keep split in thread bc its disk I/O
         self.split_and_order_image(callback=run_preprocessing)
+
 
 
     def launch_training(self):
