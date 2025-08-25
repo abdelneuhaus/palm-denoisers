@@ -174,7 +174,5 @@ cython_debug/
 reports/
 
 
-# Local tests
-./local
-/local/*
-local
+# Local testing
+./local/care/Training/
