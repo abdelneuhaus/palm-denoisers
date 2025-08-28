@@ -1,0 +1,1041 @@
+|\  Noise2Self train is starting... 
+||->  Features will be computed using dtype: float32 
+||\  CB Regressor 
+|||->  patience: 32 
+|||->  gpu: True 
+||-<< 0.00 microseconds 
+|| 
+||\  FGR image translator 
+|||->  balance training data: True 
+||-<< 0.00 microseconds 
+|| 
+||->  Instanciating: VarianceStabilisationTransform (mode=anscomb) 
+||->  Instanciating: FixedPatternTransform (percentile=1.0, sigma=0.5) 
+||->  Instanciating: RangeTransform (mode=minmax, percentile=None, leave_as_float=False, clip=True ) 
+||->  Instanciating: PaddingTransform (pad_width=3, min_length_to_pad=8, mode=reflect) 
+||\  Learning to translate from image of dimensions (10000, 64, 64) to (10000, 64, 64), batch_axes=[False, False, False], channel_axes=[False, False, False], jinv=None. 
+|||->  Running garbage collector... 
+|||->  Training is self-supervised. 
+|||\  transform preprocess: 
+||||->  applying transform: FixedPatternTransform (percentile=1.0, sigma=0.5) 
+||||\  Removing axis-aligned fixed patterns for array of shape: (10000, 64, 64) and dtype: uint16: 
+|||||->  Suppressing variations across hyperplane: (0,) 
+|||||->  Suppressing variations across hyperplane: (1,) 
+|||||->  Suppressing variations across hyperplane: (2,) 
+|||||->  Suppressing variations across hyperplane: (0, 1) 
+|||||->  Suppressing variations across hyperplane: (0, 2) 
+|||||->  Suppressing variations across hyperplane: (1, 2) 
+||||-<< 9.31 seconds 
+|||| 
+||||->  applying transform: VarianceStabilisationTransform (mode=anscomb) 
+||||\  Stabilising variance (anscomb) for array of shape: (10000, 64, 64) and dtype: float32 
+||||-<< 54.00 milliseconds 
+|||| 
+||||->  applying transform: RangeTransform (mode=minmax, percentile=None, leave_as_float=False, clip=True ) 
+||||\  Normalizing value range (minmax) for array of shape: (10000, 64, 64) and dtype: float32 
+|||||\  Calibrating array using minmax method 
+||||||->  Range for normalisation: [1.2247449159622192, 67.39376831054688] 
+|||||-<< 34.00 milliseconds 
+||||| 
+||||-<< 308.00 milliseconds 
+|||| 
+||||->  applying transform: PaddingTransform (pad_width=3, min_length_to_pad=8, mode=reflect) 
+||||\  Padding array of shape: (10000, 64, 64) with 3 voxels and mode: reflect: 
+|||||->  Effective padding widths: ((3, 3), (3, 3), (3, 3)) 
+||||-<< 145.00 milliseconds 
+|||| 
+|||-<< 9.85 seconds 
+||| 
+|||->  Automatic discovery of noise autocorrelation and specification of N2S blind-spots activated! 
+|||\  Cropping image of size: (8756, 62, 62) with at most 1000000 voxels and mode contrast 
+||||\  Cast and normalise image... 
+||||-<< 0.00 microseconds 
+|||| 
+||||\  Apply cropping filter to image of shape: (8756, 62, 62) 
+||||-<< 1.04 seconds 
+|||| 
+||||->  Interrupting crop search because of timeout after 512 crops examined! 
+|||-<< 2.61 seconds 
+||| 
+|||->  Blind spots: [(0, 0, 0)] 
+|||->  Autocorrelogram unique values in decreasing order: [+1.,+0.] 
+|||\  Training image translator from image of shape (1, 1, 10006, 70, 70) to image of shape (1, 1, 10006, 70, 70): 
+||||->  Image has: 49029400 voxels, at most: 40000000 voxels will be used for training or validation. 
+||||->  Given train ratio is: 1.0, max_voxels induced keep-ratio is: 0.8158370283952078 
+||||->  Data histogram balancer is: active 
+||||->  Effective keep-ratio is: 0.8158370283952078 
+||||->  Favouring bright pixels: no 
+||||->  Using contiguous batches of length: 16  
+||||->  Calibrating balancer... 
+||||\  Balancer: sampling to estimate min and max values for entries 
+||||-<< 1.50 seconds 
+|||| 
+||||->  Balancer: full data min and max: [0.22728129751969875, 0.9220768567646118]  
+||||->  Balancer: batch min and max: [0.4575713872909546, 0.6505979299545288]  
+||||->  Balancer: effective min and max: [0.44792006015777586, 0.6602492570877075]  
+||||\  Determine tilling strategy: 
+|||||->  image shape             = (1, 1, 10006, 70, 70) 
+|||||->  max_voxels_per_tile     = 452984832 
+|||||\  Estimating the amount of memory needed to store feature arrays: 
+||||||\  Computing features for image of shape (1, 1, 4, 4, 4): 
+|||||||->  exclude_center_feature = True 
+|||||||->  exclude_center_value   = False 
+|||||||->  excluded_voxels        = [] 
+|||||||->  spatial_feature_scale     = None 
+|||||||->  spatial_feature_offset    = None 
+|||||||\  Computing features 
+||||||||->  Number of duplicate features: 0 
+||||||||\  Creating feature array for image of shape: (1, 1, 4, 4, 4) 
+|||||||||\  Array of shape: (77, 1, 4, 4, 4) and dtype: float32 requested 
+||||||||||->  Array requested will be 0.019712 MB. 
+||||||||||->  There is 68349 MB of physical memory 
+||||||||||->  There is 25065 MB of swap memory 
+||||||||||->  There is 93414 MB of total memory 
+||||||||||->  There is enough physical+swap memory -- we do not need to use a mem mapped array or zarr-backed array. 
+|||||||||-<< 999.93 microseconds 
+||||||||| 
+||||||||-<< 999.93 microseconds 
+|||||||| 
+||||||||\  Computing features for batch: 1/1 
+|||||||||\  Computing features for channel: 1/1 
+||||||||||->  Excluding center value for channel: False 
+||||||||||->  Image slice: (0, 0, slice(None, None, None), slice(None, None, None), slice(None, None, None)) 
+||||||||||->  Feature slice for batch and channel: (slice(None, None, None), 0, slice(None, None, None), slice(None, None, None), slice(None, None, None)) 
+||||||||||->  Computing feature <aydin.features.groups.uniform.UniformFeatures object at 0x000002F2414E36A0>,  
+||||||||||->  Pre-computing uniform filter of size: (2, 3, 3) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (2, 3, 3) with parallel scipy 
+||||||||||->  Pre-computing uniform filter of size: (3, 2, 3) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (3, 2, 3) with parallel scipy 
+||||||||||->  Pre-computing uniform filter of size: (3, 3, 2) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (3, 3, 2) with parallel scipy 
+||||||||||->  Pre-computing uniform filter of size: (3, 5, 5) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (3, 5, 5) with parallel scipy 
+||||||||||->  Pre-computing uniform filter of size: (5, 3, 5) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (5, 3, 5) with parallel scipy 
+||||||||||->  Pre-computing uniform filter of size: (5, 5, 3) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (5, 5, 3) with parallel scipy 
+||||||||||->  Pre-computing uniform filter of size: (4, 7, 7) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (4, 7, 7) with parallel scipy 
+||||||||||->  Pre-computing uniform filter of size: (7, 4, 7) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (7, 4, 7) with parallel scipy 
+||||||||||->  Pre-computing uniform filter of size: (7, 7, 4) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (7, 7, 4) with parallel scipy 
+||||||||||->  Pre-computing uniform filter of size: (3, 3, 3) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (3, 3, 3) with parallel scipy 
+||||||||||->  Pre-computing uniform filter of size: (7, 7, 7) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (7, 7, 7) with parallel scipy 
+||||||||||->  Pre-computing uniform filter of size: (15, 15, 15) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (15, 15, 15) with parallel scipy 
+||||||||||->  Pre-computing uniform filter of size: (31, 31, 31) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (31, 31, 31) with parallel scipy 
+||||||||||->  Pre-computing uniform filter of size: (63, 63, 63) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (63, 63, 63) with parallel scipy 
+||||||||||->  Pre-computing uniform filter of size: (127, 127, 127) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (127, 127, 127) with parallel scipy 
+||||||||||->  Pre-computing uniform filter of size: (255, 255, 255) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (255, 255, 255) with Numba 
+||||||||||->  Pre-computing uniform filter of size: (511, 511, 511) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (511, 511, 511) with Numba 
+||||||||||->  Pre-computing uniform filter of size: (1023, 1023, 1023) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (1023, 1023, 1023) with Numba 
+||||||||||->  Pre-computing uniform filter of size: (2047, 2047, 2047) 
+||||||||||->  Image too small, CUDA not needed! 
+||||||||||->  Computed filter of size: (2047, 2047, 2047) with Numba 
+||||||||||->  Uniform feature: 0, description: ((0, 0, 0), (0, 1, 1), (1, 1, 1), '#l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 1, description: ((0, 0, 0), (1, 0, 1), (1, 1, 1), '#l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 2, description: ((0, 0, 0), (1, 1, 0), (1, 1, 1), '#l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 3, description: ((0, 0, 0), (1, 1, 1), (1, 1, 0), '#l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 4, description: ((0, 0, 0), (1, 1, 1), (1, 0, 1), '#l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 5, description: ((0, 0, 0), (1, 1, 1), (0, 1, 1), '#l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 6, description: ((0, 0, 0), (0, 2, 2), (2, 2, 2), '#l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 7, description: ((0, 0, 0), (2, 0, 2), (2, 2, 2), '#l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 8, description: ((0, 0, 0), (2, 2, 0), (2, 2, 2), '#l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 9, description: ((0, 0, 0), (2, 2, 2), (2, 2, 0), '#l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 10, description: ((0, 0, 0), (2, 2, 2), (2, 0, 2), '#l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 11, description: ((0, 0, 0), (2, 2, 2), (0, 2, 2), '#l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 12, description: ((0, 0, 0), (0, 3, 3), (3, 3, 3), '#l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 13, description: ((0, 0, 0), (3, 0, 3), (3, 3, 3), '#l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 14, description: ((0, 0, 0), (3, 3, 0), (3, 3, 3), '#l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 15, description: ((0, 0, 0), (3, 3, 3), (3, 3, 0), '#l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 16, description: ((0, 0, 0), (3, 3, 3), (3, 0, 3), '#l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 17, description: ((0, 0, 0), (3, 3, 3), (0, 3, 3), '#l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 18, description: ((-3, 0, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 19, description: ((0, -3, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 20, description: ((0, 0, -3), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 21, description: ((0, 0, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 22, description: ((0, 0, 3), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 23, description: ((0, 3, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 24, description: ((3, 0, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 25, description: ((-7, 0, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 26, description: ((0, -7, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 27, description: ((0, 0, -7), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 28, description: ((0, 0, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 29, description: ((0, 0, 7), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 30, description: ((0, 7, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 31, description: ((7, 0, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 32, description: ((-15, 0, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 33, description: ((0, -15, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 34, description: ((0, 0, -15), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 35, description: ((0, 0, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 36, description: ((0, 0, 15), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 37, description: ((0, 15, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 38, description: ((15, 0, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 39, description: ((-31, 0, 0), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 40, description: ((0, -31, 0), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 41, description: ((0, 0, -31), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 42, description: ((0, 0, 31), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 43, description: ((0, 31, 0), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 44, description: ((31, 0, 0), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 45, description: ((-63, 0, 0), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 46, description: ((0, -63, 0), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 47, description: ((0, 0, -63), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 48, description: ((0, 0, 63), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 49, description: ((0, 63, 0), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 50, description: ((63, 0, 0), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 51, description: ((-127, 0, 0), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 52, description: ((0, -127, 0), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 53, description: ((0, 0, -127), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 54, description: ((0, 0, 127), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 55, description: ((0, 127, 0), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 56, description: ((127, 0, 0), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 57, description: ((-255, 0, 0), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 58, description: ((0, -255, 0), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 59, description: ((0, 0, -255), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 60, description: ((0, 0, 255), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 61, description: ((0, 255, 0), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 62, description: ((255, 0, 0), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 63, description: ((0, 0, 0), (255, 255, 255), (255, 255, 255), 'l1oc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 64, description: ((0, 0, 0), (511, 511, 511), (511, 511, 511), 'l1oc'), excluded_voxels=[] 
+||||||||||->  Uniform feature: 65, description: ((0, 0, 0), (1023, 1023, 1023), (1023, 1023, 1023), 'l1oc'), excluded_voxels=[] 
+||||||||||->  Computing feature <aydin.features.groups.spatial.SpatialFeatures object at 0x000002F2414E3460>,  
+||||||||||->  Spatial feature 0, offset=None, scale=None, coarsening=2, period=0  
+||||||||||->  Spatial feature 1, offset=None, scale=None, coarsening=2, period=0  
+||||||||||->  Spatial feature 2, offset=None, scale=None, coarsening=2, period=0  
+||||||||||->  Computing feature <aydin.features.groups.lowpass.LowPassFeatures object at 0x000002F2414E3B20>,  
+||||||||||->  Correlative feature: 0 of shape=(5, 5, 5), excluded_voxels=[] 
+||||||||||->  Correlative feature: 1 of shape=(7, 7, 7), excluded_voxels=[] 
+||||||||||->  Correlative feature: 2 of shape=(7, 7, 7), excluded_voxels=[] 
+||||||||||->  Correlative feature: 3 of shape=(7, 7, 7), excluded_voxels=[] 
+||||||||||->  Correlative feature: 4 of shape=(7, 7, 7), excluded_voxels=[] 
+||||||||||->  Correlative feature: 5 of shape=(9, 9, 9), excluded_voxels=[] 
+||||||||||->  Correlative feature: 6 of shape=(9, 9, 9), excluded_voxels=[] 
+||||||||||->  Correlative feature: 7 of shape=(9, 9, 9), excluded_voxels=[] 
+|||||||||-<< 41.00 milliseconds 
+||||||||| 
+||||||||-<< 42.00 milliseconds 
+|||||||| 
+|||||||-<< 4.94 seconds 
+||||||| 
+||||||-<< 4.94 seconds 
+|||||| 
+|||||-<< 4.94 seconds 
+||||| 
+|||||->  Estimated amount of memory needed: 19631371760.0 
+|||||->  Available memory (we reserve 10% for 'comfort'): 61514868326.4 
+|||||->  How much do we need to tile because of memory? : 0.31913214307531745 times. 
+|||||->  How much do we need to tile because of the limit on the number of voxels per tile? : 0.10823629520557544 times. 
+|||||->  How much do we need to tile because of the suggested tile size? : 0.0 times. 
+|||||->  Desired split factor: 1 
+|||||->  Tilling strategy is: (1, 1, 1, 1, 1) 
+|||||->  The estimated tile shape is: (10006, 70, 70) 
+||||-<< 4.94 seconds 
+|||| 
+||||->  Tilling strategy (just batches): (1, 1, 1, 1, 1) 
+||||->  Margins for tiles: (0, 0, 0, 0, 0) . 
+||||->  Number of tiles (slices): 1 
+||||\  Current tile: 0/1, slice: (slice(0, 1, 1), slice(0, 1, 1), slice(0, 10006, 1), slice(0, 70, 1), slice(0, 70, 1))  
+|||||\  Computing features for image of shape (1, 1, 10006, 70, 70): 
+||||||->  exclude_center_feature = True 
+||||||->  exclude_center_value   = True 
+||||||->  excluded_voxels        = [] 
+||||||->  spatial_feature_scale     = (9.994003597841295e-05, 0.014285714285714285, 0.014285714285714285) 
+||||||->  spatial_feature_offset    = (0, 0, 0) 
+||||||\  Computing features 
+|||||||->  Number of duplicate features: 0 
+|||||||\  Creating feature array for image of shape: (1, 1, 10006, 70, 70) 
+||||||||\  Array of shape: (77, 1, 10006, 70, 70) and dtype: float32 requested 
+|||||||||->  Array requested will be -2078.813984 MB. 
+|||||||||->  There is 68349 MB of physical memory 
+|||||||||->  There is 25065 MB of swap memory 
+|||||||||->  There is 93414 MB of total memory 
+|||||||||->  There is enough physical+swap memory -- we do not need to use a mem mapped array or zarr-backed array. 
+||||||||-<< 1.00 milliseconds 
+|||||||| 
+|||||||-<< 2.00 milliseconds 
+||||||| 
+|||||||\  Computing features for batch: 1/1 
+||||||||\  Computing features for channel: 1/1 
+|||||||||->  Excluding center value for channel: True 
+|||||||||->  Image slice: (0, 0, slice(None, None, None), slice(None, None, None), slice(None, None, None)) 
+|||||||||->  Feature slice for batch and channel: (slice(None, None, None), 0, slice(None, None, None), slice(None, None, None), slice(None, None, None)) 
+|||||||||->  Computing feature <aydin.features.groups.uniform.UniformFeatures object at 0x000002F2414E36A0>,  
+|||||||||->  Pre-computing uniform filter of size: (2, 3, 3) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (2, 3, 3) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (3, 2, 3) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (3, 2, 3) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (3, 3, 2) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (3, 3, 2) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (3, 5, 5) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (3, 5, 5) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (5, 3, 5) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (5, 3, 5) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (5, 5, 3) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (5, 5, 3) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (4, 7, 7) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (4, 7, 7) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (7, 4, 7) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (7, 4, 7) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (7, 7, 4) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (7, 7, 4) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (3, 3, 3) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (3, 3, 3) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (7, 7, 7) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (7, 7, 7) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (15, 15, 15) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (15, 15, 15) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (31, 31, 31) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (31, 31, 31) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (63, 63, 63) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (63, 63, 63) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (127, 127, 127) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (127, 127, 127) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (255, 255, 255) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (255, 255, 255) with Numba 
+|||||||||->  Pre-computing uniform filter of size: (511, 511, 511) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (511, 511, 511) with Numba 
+|||||||||->  Pre-computing uniform filter of size: (1023, 1023, 1023) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (1023, 1023, 1023) with Numba 
+|||||||||->  Pre-computing uniform filter of size: (2047, 2047, 2047) 
+|||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+|||||||||->  Computed filter of size: (2047, 2047, 2047) with Numba 
+|||||||||->  Uniform feature: 0, description: ((0, 0, 0), (0, 1, 1), (1, 1, 1), '#l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 1, description: ((0, 0, 0), (1, 0, 1), (1, 1, 1), '#l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 2, description: ((0, 0, 0), (1, 1, 0), (1, 1, 1), '#l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 3, description: ((0, 0, 0), (1, 1, 1), (1, 1, 0), '#l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 4, description: ((0, 0, 0), (1, 1, 1), (1, 0, 1), '#l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 5, description: ((0, 0, 0), (1, 1, 1), (0, 1, 1), '#l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 6, description: ((0, 0, 0), (0, 2, 2), (2, 2, 2), '#l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 7, description: ((0, 0, 0), (2, 0, 2), (2, 2, 2), '#l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 8, description: ((0, 0, 0), (2, 2, 0), (2, 2, 2), '#l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 9, description: ((0, 0, 0), (2, 2, 2), (2, 2, 0), '#l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 10, description: ((0, 0, 0), (2, 2, 2), (2, 0, 2), '#l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 11, description: ((0, 0, 0), (2, 2, 2), (0, 2, 2), '#l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 12, description: ((0, 0, 0), (0, 3, 3), (3, 3, 3), '#l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 13, description: ((0, 0, 0), (3, 0, 3), (3, 3, 3), '#l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 14, description: ((0, 0, 0), (3, 3, 0), (3, 3, 3), '#l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 15, description: ((0, 0, 0), (3, 3, 3), (3, 3, 0), '#l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 16, description: ((0, 0, 0), (3, 3, 3), (3, 0, 3), '#l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 17, description: ((0, 0, 0), (3, 3, 3), (0, 3, 3), '#l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 18, description: ((-3, 0, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 19, description: ((0, -3, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 20, description: ((0, 0, -3), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 21, description: ((0, 0, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 22, description: ((0, 0, 3), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 23, description: ((0, 3, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 24, description: ((3, 0, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 25, description: ((-7, 0, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 26, description: ((0, -7, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 27, description: ((0, 0, -7), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 28, description: ((0, 0, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 29, description: ((0, 0, 7), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 30, description: ((0, 7, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 31, description: ((7, 0, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 32, description: ((-15, 0, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 33, description: ((0, -15, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 34, description: ((0, 0, -15), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 35, description: ((0, 0, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 36, description: ((0, 0, 15), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 37, description: ((0, 15, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 38, description: ((15, 0, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 39, description: ((-31, 0, 0), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 40, description: ((0, -31, 0), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 41, description: ((0, 0, -31), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 42, description: ((0, 0, 31), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 43, description: ((0, 31, 0), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 44, description: ((31, 0, 0), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 45, description: ((-63, 0, 0), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 46, description: ((0, -63, 0), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 47, description: ((0, 0, -63), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 48, description: ((0, 0, 63), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 49, description: ((0, 63, 0), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 50, description: ((63, 0, 0), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 51, description: ((-127, 0, 0), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 52, description: ((0, -127, 0), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 53, description: ((0, 0, -127), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 54, description: ((0, 0, 127), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 55, description: ((0, 127, 0), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 56, description: ((127, 0, 0), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 57, description: ((-255, 0, 0), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 58, description: ((0, -255, 0), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 59, description: ((0, 0, -255), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 60, description: ((0, 0, 255), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 61, description: ((0, 255, 0), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 62, description: ((255, 0, 0), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Uniform feature: 63, description: ((0, 0, 0), (255, 255, 255), (255, 255, 255), 'l1oc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 64, description: ((0, 0, 0), (511, 511, 511), (511, 511, 511), 'l1oc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Uniform feature: 65, description: ((0, 0, 0), (1023, 1023, 1023), (1023, 1023, 1023), 'l1oc'), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  excluded voxel: (0, 0, 0) 
+|||||||||->  Computing feature <aydin.features.groups.spatial.SpatialFeatures object at 0x000002F2414E3460>,  
+|||||||||->  Spatial feature 0, offset=(0, 0, 0), scale=(9.994003597841295e-05, 0.014285714285714285, 0.014285714285714285), coarsening=2, period=0  
+|||||||||->  Spatial feature 1, offset=(0, 0, 0), scale=(9.994003597841295e-05, 0.014285714285714285, 0.014285714285714285), coarsening=2, period=0  
+|||||||||->  Spatial feature 2, offset=(0, 0, 0), scale=(9.994003597841295e-05, 0.014285714285714285, 0.014285714285714285), coarsening=2, period=0  
+|||||||||->  Computing feature <aydin.features.groups.lowpass.LowPassFeatures object at 0x000002F2414E3B20>,  
+|||||||||->  Correlative feature: 0 of shape=(5, 5, 5), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Correlative feature: 1 of shape=(7, 7, 7), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Correlative feature: 2 of shape=(7, 7, 7), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Correlative feature: 3 of shape=(7, 7, 7), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Correlative feature: 4 of shape=(7, 7, 7), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Correlative feature: 5 of shape=(9, 9, 9), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Correlative feature: 6 of shape=(9, 9, 9), excluded_voxels=[(0, 0, 0)] 
+|||||||||->  Correlative feature: 7 of shape=(9, 9, 9), excluded_voxels=[(0, 0, 0)] 
+||||||||-<< 1.02 minutes 
+|||||||| 
+|||||||-<< 1.02 minutes 
+||||||| 
+||||||-<< 1.11 minutes 
+|||||| 
+|||||-<< 1.11 minutes 
+||||| 
+|||||->  Number of entries: 49029400, features: 77, input channels: 1, target channels: 1 
+|||||\  Splitting train and test sets (train_test_ratio=0.1)  
+||||||->  Creating random indices for train/val split (nb_split_batches=3064337) 
+||||||->  train/valid bool array created (length=3064337) 
+||||||->  Shuffling train/valid bool array... 
+||||||->  Calculating number of entries for train and validation... 
+||||||->  Number of entries for training: 44126464 = 2757904*16, validation: 4902928 = 306433 * 16 
+||||||->  Allocating arrays... 
+||||||\  Array of shape: (77, 44126464) and dtype: float32 requested 
+aydin\util\offcore\offcore.py:37: RuntimeWarning: overflow encountered in long_scalars
+|||||||->  Array requested will be 706.049024 MB. 
+|||||||->  There is 68349 MB of physical memory 
+|||||||->  There is 25065 MB of swap memory 
+|||||||->  There is 93414 MB of total memory 
+|||||||->  There is enough physical+swap memory -- we do not need to use a mem mapped array or zarr-backed array. 
+||||||-<< 2.00 milliseconds 
+|||||| 
+||||||\  Array of shape: (1, 44126464) and dtype: float32 requested 
+|||||||->  Array requested will be 176.505856 MB. 
+|||||||->  There is 68349 MB of physical memory 
+|||||||->  There is 25065 MB of swap memory 
+|||||||->  There is 93414 MB of total memory 
+|||||||->  There is enough physical+swap memory -- we do not need to use a mem mapped array or zarr-backed array. 
+||||||-<< 0.00 microseconds 
+|||||| 
+||||||\  Array of shape: (77, 4902928) and dtype: float32 requested 
+|||||||->  Array requested will be 1510.101824 MB. 
+|||||||->  There is 68349 MB of physical memory 
+|||||||->  There is 25065 MB of swap memory 
+|||||||->  There is 93414 MB of total memory 
+|||||||->  There is enough physical+swap memory -- we do not need to use a mem mapped array or zarr-backed array. 
+||||||-<< 0.00 microseconds 
+|||||| 
+||||||\  Array of shape: (1, 4902928) and dtype: float32 requested 
+|||||||->  Array requested will be 19.611712 MB. 
+|||||||->  There is 68349 MB of physical memory 
+|||||||->  There is 25065 MB of swap memory 
+|||||||->  There is 93414 MB of total memory 
+|||||||->  There is enough physical+swap memory -- we do not need to use a mem mapped array or zarr-backed array. 
+||||||-<< 0.00 microseconds 
+|||||| 
+||||||\  Copying data for training and validation sets... 
+|||||||->  Copying section [0,47880] 
+|||||||->  Copying section [47880,95760] 
+|||||||->  Copying section [95760,143640] 
+|||||||->  Copying section [143640,191520] 
+|||||||->  Copying section [191520,239400] 
+|||||||->  Copying section [239400,287280] 
+|||||||->  Copying section [287280,335160] 
+|||||||->  Copying section [335160,383040] 
+|||||||->  Copying section [383040,430920] 
+|||||||->  Copying section [430920,478800] 
+|||||||->  Copying section [478800,526680] 
+|||||||->  Copying section [526680,574560] 
+|||||||->  Copying section [574560,622440] 
+|||||||->  Copying section [622440,670320] 
+|||||||->  Copying section [670320,718200] 
+|||||||->  Copying section [718200,766080] 
+|||||||->  Copying section [766080,813960] 
+|||||||->  Copying section [813960,861840] 
+|||||||->  Copying section [861840,909720] 
+|||||||->  Copying section [909720,957600] 
+|||||||->  Copying section [957600,1005480] 
+|||||||->  Copying section [1005480,1053360] 
+|||||||->  Copying section [1053360,1101240] 
+|||||||->  Copying section [1101240,1149120] 
+|||||||->  Copying section [1149120,1197000] 
+|||||||->  Copying section [1197000,1244880] 
+|||||||->  Copying section [1244880,1292760] 
+|||||||->  Copying section [1292760,1340640] 
+|||||||->  Copying section [1340640,1388520] 
+|||||||->  Copying section [1388520,1436400] 
+|||||||->  Copying section [1436400,1484280] 
+|||||||->  Copying section [1484280,1532160] 
+|||||||->  Copying section [1532160,1580040] 
+|||||||->  Copying section [1580040,1627920] 
+|||||||->  Copying section [1627920,1675800] 
+|||||||->  Copying section [1675800,1723680] 
+|||||||->  Copying section [1723680,1771560] 
+|||||||->  Copying section [1771560,1819440] 
+|||||||->  Copying section [1819440,1867320] 
+|||||||->  Copying section [1867320,1915200] 
+|||||||->  Copying section [1915200,1963080] 
+|||||||->  Copying section [1963080,2010960] 
+|||||||->  Copying section [2010960,2058840] 
+|||||||->  Copying section [2058840,2106720] 
+|||||||->  Copying section [2106720,2154600] 
+|||||||->  Copying section [2154600,2202480] 
+|||||||->  Copying section [2202480,2250360] 
+|||||||->  Copying section [2250360,2298240] 
+|||||||->  Copying section [2298240,2346120] 
+|||||||->  Copying section [2346120,2394000] 
+|||||||->  Copying section [2394000,2441880] 
+|||||||->  Copying section [2441880,2489760] 
+|||||||->  Copying section [2489760,2537640] 
+|||||||->  Copying section [2537640,2585520] 
+|||||||->  Copying section [2585520,2633400] 
+|||||||->  Copying section [2633400,2681280] 
+|||||||->  Copying section [2681280,2729160] 
+|||||||->  Copying section [2729160,2777040] 
+|||||||->  Copying section [2777040,2824920] 
+|||||||->  Copying section [2824920,2872800] 
+|||||||->  Copying section [2872800,2920680] 
+|||||||->  Copying section [2920680,2968560] 
+|||||||->  Copying section [2968560,3016440] 
+|||||||->  Copying section [3016440,3064320] 
+|||||||->  Copying section [3064320,3064337] 
+|||||||->  Histogram all    : │····················------■■■░░░░░▒▒▒▒▒▒▓▓▓▓█████████████████▓▓▓▓▓▒▒▒▒▒▒░░░░░░■■■■■---------····································│ 
+|||||||->  Histogram kept   : │····················------■■■░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░■■■■■---------····································│ 
+|||||||->  Histogram dropped: │                                ·-■░░░▒▒▒▒▒▓▓▓▓▓█████████▓▓▓▓▓▓▒▒▒▒▒░░░■■-·                                                     │ 
+|||||||->  Number of entries kept: 1033059 out of 3064337 total 
+|||||||->  Percentage of data kept: 33.712% (train_data_ratio=0.8158370283952078)  
+||||||-<< 1.16 minutes 
+|||||| 
+|||||-<< 1.17 minutes 
+||||| 
+||||-<< 2.31 minutes 
+|||| 
+||||->  Training now... 
+||||\  CatBoost regressor fitting: 
+|||||->  Number of data points: 14872048 
+|||||->  Number of validation data points: 1656896 
+|||||->  Number of features per data point: 77 
+|||||\  CatBoost regressor fitting now using GPU(None)  
+||||||->  Trying learning rate of 'None' (None -> automatic) 
+||||||->  min_data_in_leaf: 310 
+||||||->  objective: MAE 
+||||||->  max_depth: 8 
+||||||->  gpu_ram_type: CpuPinnedMemory 
+||||||->  max_num_estimators: 4096 
+||||||->  Initialising CatBoost with {'iterations': 4096, 'task_type': 'GPU', 'devices': 'NULL', 'objective': 'MAE', 'loss_function': 'L1', 'allow_writing_files': True, 'train_dir': 'C:\\Users\\aneuhaus\\AppData\\Local\\Temp\\catboost_training_ne4irk6z', 'max_bin': 254, 'rsm': None, 'thread_count': 45, 'gpu_cat_features_storage': 'CpuPinnedMemory', 'max_depth': 8, 'early_stopping_rounds': 32, 'bagging_temperature': 1, 'min_data_in_leaf': 310, 'l2_leaf_reg': 30, 'feature_border_type': 'UniformAndQuantiles', 'metric_period': 50, 'learning_rate': None} 
+||||||->  Fitting CatBoost model for: X(14872048, 77) -> y(14872048,) 
+||||||->  CatBoost fitting succeeded! new learning rate for regressor: None 
+||||||->  CatBoost fitting done. 
+|||||-<< 4.18 minutes 
+||||| 
+||||-<< 4.19 minutes 
+|||| 
+|||-<< 6.62 minutes 
+||| 
+||-<< 6.85 minutes 
+|| 
+|-<< 6.85 minutes 
+| 
+|\  Noise2Self denoise is starting... 
+||\  Predicting output image from input image of dimension (10000, 64, 64), batch_axes=[False, False, False], channel_axes=[False, False, False] 
+|||\  transform preprocess: 
+||||->  applying transform: FixedPatternTransform (percentile=1.0, sigma=0.5) 
+||||\  Removing axis-aligned fixed patterns for array of shape: (10000, 64, 64) and dtype: uint16: 
+|||||->  Suppressing variations across hyperplane: (0,) 
+|||||->  Suppressing variations across hyperplane: (1,) 
+|||||->  Suppressing variations across hyperplane: (2,) 
+|||||->  Suppressing variations across hyperplane: (0, 1) 
+|||||->  Suppressing variations across hyperplane: (0, 2) 
+|||||->  Suppressing variations across hyperplane: (1, 2) 
+||||-<< 9.33 seconds 
+|||| 
+||||->  applying transform: VarianceStabilisationTransform (mode=anscomb) 
+||||\  Stabilising variance (anscomb) for array of shape: (10000, 64, 64) and dtype: float32 
+||||-<< 43.00 milliseconds 
+|||| 
+||||->  applying transform: RangeTransform (mode=minmax, percentile=None, leave_as_float=False, clip=True ) 
+||||\  Normalizing value range (minmax) for array of shape: (10000, 64, 64) and dtype: float32 
+|||||\  Calibrating array using minmax method 
+||||||->  Range for normalisation: [1.2247449159622192, 67.39376831054688] 
+|||||-<< 28.00 milliseconds 
+||||| 
+||||-<< 307.00 milliseconds 
+|||| 
+||||->  applying transform: PaddingTransform (pad_width=3, min_length_to_pad=8, mode=reflect) 
+||||\  Padding array of shape: (10000, 64, 64) with 3 voxels and mode: reflect: 
+|||||->  Effective padding widths: ((3, 3), (3, 3), (3, 3)) 
+||||-<< 144.00 milliseconds 
+|||| 
+|||-<< 9.85 seconds 
+||| 
+|||\  Determine tilling strategy: 
+||||->  image shape             = (1, 1, 10006, 70, 70) 
+||||->  max_voxels_per_tile     = 452984832 
+||||\  Estimating the amount of memory needed to store feature arrays: 
+|||||\  Computing features for image of shape (1, 1, 4, 4, 4): 
+||||||->  exclude_center_feature = True 
+||||||->  exclude_center_value   = False 
+||||||->  excluded_voxels        = [] 
+||||||->  spatial_feature_scale     = None 
+||||||->  spatial_feature_offset    = None 
+||||||\  Computing features 
+|||||||->  Number of duplicate features: 0 
+|||||||\  Creating feature array for image of shape: (1, 1, 4, 4, 4) 
+||||||||\  Array of shape: (77, 1, 4, 4, 4) and dtype: float32 requested 
+|||||||||->  Array requested will be 0.019712 MB. 
+|||||||||->  There is 68349 MB of physical memory 
+|||||||||->  There is 25065 MB of swap memory 
+|||||||||->  There is 93414 MB of total memory 
+|||||||||->  There is enough physical+swap memory -- we do not need to use a mem mapped array or zarr-backed array. 
+||||||||-<< 997.30 microseconds 
+|||||||| 
+|||||||-<< 997.30 microseconds 
+||||||| 
+|||||||\  Computing features for batch: 1/1 
+||||||||\  Computing features for channel: 1/1 
+|||||||||->  Excluding center value for channel: False 
+|||||||||->  Image slice: (0, 0, slice(None, None, None), slice(None, None, None), slice(None, None, None)) 
+|||||||||->  Feature slice for batch and channel: (slice(None, None, None), 0, slice(None, None, None), slice(None, None, None), slice(None, None, None)) 
+|||||||||->  Computing feature <aydin.features.groups.uniform.UniformFeatures object at 0x000002F2414E36A0>,  
+|||||||||->  Pre-computing uniform filter of size: (2, 3, 3) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (2, 3, 3) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (3, 2, 3) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (3, 2, 3) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (3, 3, 2) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (3, 3, 2) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (3, 5, 5) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (3, 5, 5) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (5, 3, 5) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (5, 3, 5) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (5, 5, 3) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (5, 5, 3) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (4, 7, 7) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (4, 7, 7) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (7, 4, 7) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (7, 4, 7) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (7, 7, 4) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (7, 7, 4) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (3, 3, 3) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (3, 3, 3) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (7, 7, 7) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (7, 7, 7) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (15, 15, 15) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (15, 15, 15) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (31, 31, 31) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (31, 31, 31) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (63, 63, 63) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (63, 63, 63) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (127, 127, 127) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (127, 127, 127) with parallel scipy 
+|||||||||->  Pre-computing uniform filter of size: (255, 255, 255) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (255, 255, 255) with Numba 
+|||||||||->  Pre-computing uniform filter of size: (511, 511, 511) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (511, 511, 511) with Numba 
+|||||||||->  Pre-computing uniform filter of size: (1023, 1023, 1023) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (1023, 1023, 1023) with Numba 
+|||||||||->  Pre-computing uniform filter of size: (2047, 2047, 2047) 
+|||||||||->  Image too small, CUDA not needed! 
+|||||||||->  Computed filter of size: (2047, 2047, 2047) with Numba 
+|||||||||->  Uniform feature: 0, description: ((0, 0, 0), (0, 1, 1), (1, 1, 1), '#l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 1, description: ((0, 0, 0), (1, 0, 1), (1, 1, 1), '#l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 2, description: ((0, 0, 0), (1, 1, 0), (1, 1, 1), '#l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 3, description: ((0, 0, 0), (1, 1, 1), (1, 1, 0), '#l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 4, description: ((0, 0, 0), (1, 1, 1), (1, 0, 1), '#l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 5, description: ((0, 0, 0), (1, 1, 1), (0, 1, 1), '#l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 6, description: ((0, 0, 0), (0, 2, 2), (2, 2, 2), '#l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 7, description: ((0, 0, 0), (2, 0, 2), (2, 2, 2), '#l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 8, description: ((0, 0, 0), (2, 2, 0), (2, 2, 2), '#l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 9, description: ((0, 0, 0), (2, 2, 2), (2, 2, 0), '#l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 10, description: ((0, 0, 0), (2, 2, 2), (2, 0, 2), '#l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 11, description: ((0, 0, 0), (2, 2, 2), (0, 2, 2), '#l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 12, description: ((0, 0, 0), (0, 3, 3), (3, 3, 3), '#l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 13, description: ((0, 0, 0), (3, 0, 3), (3, 3, 3), '#l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 14, description: ((0, 0, 0), (3, 3, 0), (3, 3, 3), '#l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 15, description: ((0, 0, 0), (3, 3, 3), (3, 3, 0), '#l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 16, description: ((0, 0, 0), (3, 3, 3), (3, 0, 3), '#l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 17, description: ((0, 0, 0), (3, 3, 3), (0, 3, 3), '#l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 18, description: ((-3, 0, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 19, description: ((0, -3, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 20, description: ((0, 0, -3), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 21, description: ((0, 0, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 22, description: ((0, 0, 3), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 23, description: ((0, 3, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 24, description: ((3, 0, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 25, description: ((-7, 0, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 26, description: ((0, -7, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 27, description: ((0, 0, -7), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 28, description: ((0, 0, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 29, description: ((0, 0, 7), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 30, description: ((0, 7, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 31, description: ((7, 0, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 32, description: ((-15, 0, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 33, description: ((0, -15, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 34, description: ((0, 0, -15), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 35, description: ((0, 0, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 36, description: ((0, 0, 15), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 37, description: ((0, 15, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 38, description: ((15, 0, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 39, description: ((-31, 0, 0), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 40, description: ((0, -31, 0), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 41, description: ((0, 0, -31), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 42, description: ((0, 0, 31), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 43, description: ((0, 31, 0), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 44, description: ((31, 0, 0), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 45, description: ((-63, 0, 0), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 46, description: ((0, -63, 0), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 47, description: ((0, 0, -63), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 48, description: ((0, 0, 63), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 49, description: ((0, 63, 0), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 50, description: ((63, 0, 0), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 51, description: ((-127, 0, 0), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 52, description: ((0, -127, 0), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 53, description: ((0, 0, -127), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 54, description: ((0, 0, 127), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 55, description: ((0, 127, 0), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 56, description: ((127, 0, 0), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 57, description: ((-255, 0, 0), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 58, description: ((0, -255, 0), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 59, description: ((0, 0, -255), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 60, description: ((0, 0, 255), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 61, description: ((0, 255, 0), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 62, description: ((255, 0, 0), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 63, description: ((0, 0, 0), (255, 255, 255), (255, 255, 255), 'l1oc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 64, description: ((0, 0, 0), (511, 511, 511), (511, 511, 511), 'l1oc'), excluded_voxels=[] 
+|||||||||->  Uniform feature: 65, description: ((0, 0, 0), (1023, 1023, 1023), (1023, 1023, 1023), 'l1oc'), excluded_voxels=[] 
+|||||||||->  Computing feature <aydin.features.groups.spatial.SpatialFeatures object at 0x000002F2414E3460>,  
+|||||||||->  Spatial feature 0, offset=None, scale=None, coarsening=2, period=0  
+|||||||||->  Spatial feature 1, offset=None, scale=None, coarsening=2, period=0  
+|||||||||->  Spatial feature 2, offset=None, scale=None, coarsening=2, period=0  
+|||||||||->  Computing feature <aydin.features.groups.lowpass.LowPassFeatures object at 0x000002F2414E3B20>,  
+|||||||||->  Correlative feature: 0 of shape=(5, 5, 5), excluded_voxels=[] 
+|||||||||->  Correlative feature: 1 of shape=(7, 7, 7), excluded_voxels=[] 
+|||||||||->  Correlative feature: 2 of shape=(7, 7, 7), excluded_voxels=[] 
+|||||||||->  Correlative feature: 3 of shape=(7, 7, 7), excluded_voxels=[] 
+|||||||||->  Correlative feature: 4 of shape=(7, 7, 7), excluded_voxels=[] 
+|||||||||->  Correlative feature: 5 of shape=(9, 9, 9), excluded_voxels=[] 
+|||||||||->  Correlative feature: 6 of shape=(9, 9, 9), excluded_voxels=[] 
+|||||||||->  Correlative feature: 7 of shape=(9, 9, 9), excluded_voxels=[] 
+||||||||-<< 28.15 milliseconds 
+|||||||| 
+|||||||-<< 28.15 milliseconds 
+||||||| 
+||||||-<< 5.03 seconds 
+|||||| 
+|||||-<< 5.03 seconds 
+||||| 
+||||-<< 5.03 seconds 
+|||| 
+||||->  Estimated amount of memory needed: 19631371760.0 
+||||->  Available memory (we reserve 10% for 'comfort'): 61514868326.4 
+||||->  How much do we need to tile because of memory? : 0.31913214307531745 times. 
+||||->  How much do we need to tile because of the limit on the number of voxels per tile? : 0.10823629520557544 times. 
+||||->  How much do we need to tile because of the suggested tile size? : 0.0 times. 
+||||->  Desired split factor: 1 
+||||->  Tilling strategy is: (1, 1, 1, 1, 1) 
+||||->  The estimated tile shape is: (10006, 70, 70) 
+|||-<< 5.03 seconds 
+||| 
+|||->  Tilling strategy: (1, 1, 1, 1, 1) 
+|||->  Margins for tiles: (0, 0, 0, 0, 0) . 
+|||->  Number of tiles (slices): 1 
+|||\  Current tile: 1/1, slice: (slice(0, 1, 1), slice(0, 1, 1), slice(0, 10006, 1), slice(0, 70, 1), slice(0, 70, 1))  
+||||->  Translating... 
+||||\  Computing features for image of shape (1, 1, 10006, 70, 70): 
+|||||->  exclude_center_feature = True 
+|||||->  exclude_center_value   = False 
+|||||->  excluded_voxels        = [] 
+|||||->  spatial_feature_scale     = (9.994003597841295e-05, 0.014285714285714285, 0.014285714285714285) 
+|||||->  spatial_feature_offset    = (0, 0, 0) 
+|||||\  Computing features 
+||||||->  Number of duplicate features: 0 
+||||||\  Creating feature array for image of shape: (1, 1, 10006, 70, 70) 
+|||||||\  Array of shape: (77, 1, 10006, 70, 70) and dtype: float32 requested 
+||||||||->  Array requested will be -2078.813984 MB. 
+||||||||->  There is 68349 MB of physical memory 
+||||||||->  There is 25065 MB of swap memory 
+||||||||->  There is 93414 MB of total memory 
+||||||||->  There is enough physical+swap memory -- we do not need to use a mem mapped array or zarr-backed array. 
+|||||||-<< 0.00 microseconds 
+||||||| 
+||||||-<< 1.00 milliseconds 
+|||||| 
+||||||\  Computing features for batch: 1/1 
+|||||||\  Computing features for channel: 1/1 
+||||||||->  Excluding center value for channel: False 
+||||||||->  Image slice: (0, 0, slice(None, None, None), slice(None, None, None), slice(None, None, None)) 
+||||||||->  Feature slice for batch and channel: (slice(None, None, None), 0, slice(None, None, None), slice(None, None, None), slice(None, None, None)) 
+||||||||->  Computing feature <aydin.features.groups.uniform.UniformFeatures object at 0x000002F2414E36A0>,  
+||||||||->  Pre-computing uniform filter of size: (2, 3, 3) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (2, 3, 3) with parallel scipy 
+||||||||->  Pre-computing uniform filter of size: (3, 2, 3) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (3, 2, 3) with parallel scipy 
+||||||||->  Pre-computing uniform filter of size: (3, 3, 2) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (3, 3, 2) with parallel scipy 
+||||||||->  Pre-computing uniform filter of size: (3, 5, 5) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (3, 5, 5) with parallel scipy 
+||||||||->  Pre-computing uniform filter of size: (5, 3, 5) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (5, 3, 5) with parallel scipy 
+||||||||->  Pre-computing uniform filter of size: (5, 5, 3) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (5, 5, 3) with parallel scipy 
+||||||||->  Pre-computing uniform filter of size: (4, 7, 7) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (4, 7, 7) with parallel scipy 
+||||||||->  Pre-computing uniform filter of size: (7, 4, 7) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (7, 4, 7) with parallel scipy 
+||||||||->  Pre-computing uniform filter of size: (7, 7, 4) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (7, 7, 4) with parallel scipy 
+||||||||->  Pre-computing uniform filter of size: (3, 3, 3) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (3, 3, 3) with parallel scipy 
+||||||||->  Pre-computing uniform filter of size: (7, 7, 7) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (7, 7, 7) with parallel scipy 
+||||||||->  Pre-computing uniform filter of size: (15, 15, 15) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (15, 15, 15) with parallel scipy 
+||||||||->  Pre-computing uniform filter of size: (31, 31, 31) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (31, 31, 31) with parallel scipy 
+||||||||->  Pre-computing uniform filter of size: (63, 63, 63) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (63, 63, 63) with parallel scipy 
+||||||||->  Pre-computing uniform filter of size: (127, 127, 127) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (127, 127, 127) with parallel scipy 
+||||||||->  Pre-computing uniform filter of size: (255, 255, 255) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (255, 255, 255) with Numba 
+||||||||->  Pre-computing uniform filter of size: (511, 511, 511) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (511, 511, 511) with Numba 
+||||||||->  Pre-computing uniform filter of size: (1023, 1023, 1023) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (1023, 1023, 1023) with Numba 
+||||||||->  Pre-computing uniform filter of size: (2047, 2047, 2047) 
+||||||||->  Cannot use CUDA for computing uniform filter because of: <class 'numba.cuda.cudadrv.error.NvvmError'>, and: Failed to compile, , IR version 1.6 incompatible with current version 2.0, <unnamed>: error: incompatible IR detected. Possible mix of compiler/IR from different releases., NVVM_ERROR_IR_VERSION_MISMATCH 
+||||||||->  Computed filter of size: (2047, 2047, 2047) with Numba 
+||||||||->  Uniform feature: 0, description: ((0, 0, 0), (0, 1, 1), (1, 1, 1), '#l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 1, description: ((0, 0, 0), (1, 0, 1), (1, 1, 1), '#l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 2, description: ((0, 0, 0), (1, 1, 0), (1, 1, 1), '#l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 3, description: ((0, 0, 0), (1, 1, 1), (1, 1, 0), '#l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 4, description: ((0, 0, 0), (1, 1, 1), (1, 0, 1), '#l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 5, description: ((0, 0, 0), (1, 1, 1), (0, 1, 1), '#l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 6, description: ((0, 0, 0), (0, 2, 2), (2, 2, 2), '#l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 7, description: ((0, 0, 0), (2, 0, 2), (2, 2, 2), '#l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 8, description: ((0, 0, 0), (2, 2, 0), (2, 2, 2), '#l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 9, description: ((0, 0, 0), (2, 2, 2), (2, 2, 0), '#l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 10, description: ((0, 0, 0), (2, 2, 2), (2, 0, 2), '#l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 11, description: ((0, 0, 0), (2, 2, 2), (0, 2, 2), '#l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 12, description: ((0, 0, 0), (0, 3, 3), (3, 3, 3), '#l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 13, description: ((0, 0, 0), (3, 0, 3), (3, 3, 3), '#l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 14, description: ((0, 0, 0), (3, 3, 0), (3, 3, 3), '#l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 15, description: ((0, 0, 0), (3, 3, 3), (3, 3, 0), '#l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 16, description: ((0, 0, 0), (3, 3, 3), (3, 0, 3), '#l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 17, description: ((0, 0, 0), (3, 3, 3), (0, 3, 3), '#l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 18, description: ((-3, 0, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 19, description: ((0, -3, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 20, description: ((0, 0, -3), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 21, description: ((0, 0, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 22, description: ((0, 0, 3), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 23, description: ((0, 3, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 24, description: ((3, 0, 0), (1, 1, 1), (1, 1, 1), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 25, description: ((-7, 0, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 26, description: ((0, -7, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 27, description: ((0, 0, -7), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 28, description: ((0, 0, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 29, description: ((0, 0, 7), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 30, description: ((0, 7, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 31, description: ((7, 0, 0), (3, 3, 3), (3, 3, 3), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 32, description: ((-15, 0, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 33, description: ((0, -15, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 34, description: ((0, 0, -15), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 35, description: ((0, 0, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 36, description: ((0, 0, 15), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 37, description: ((0, 15, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 38, description: ((15, 0, 0), (7, 7, 7), (7, 7, 7), 'l2'), excluded_voxels=[] 
+||||||||->  Uniform feature: 39, description: ((-31, 0, 0), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 40, description: ((0, -31, 0), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 41, description: ((0, 0, -31), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 42, description: ((0, 0, 31), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 43, description: ((0, 31, 0), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 44, description: ((31, 0, 0), (15, 15, 15), (15, 15, 15), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 45, description: ((-63, 0, 0), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 46, description: ((0, -63, 0), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 47, description: ((0, 0, -63), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 48, description: ((0, 0, 63), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 49, description: ((0, 63, 0), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 50, description: ((63, 0, 0), (31, 31, 31), (31, 31, 31), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 51, description: ((-127, 0, 0), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 52, description: ((0, -127, 0), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 53, description: ((0, 0, -127), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 54, description: ((0, 0, 127), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 55, description: ((0, 127, 0), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 56, description: ((127, 0, 0), (63, 63, 63), (63, 63, 63), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 57, description: ((-255, 0, 0), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 58, description: ((0, -255, 0), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 59, description: ((0, 0, -255), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 60, description: ((0, 0, 255), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 61, description: ((0, 255, 0), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 62, description: ((255, 0, 0), (127, 127, 127), (127, 127, 127), 'l1nc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 63, description: ((0, 0, 0), (255, 255, 255), (255, 255, 255), 'l1oc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 64, description: ((0, 0, 0), (511, 511, 511), (511, 511, 511), 'l1oc'), excluded_voxels=[] 
+||||||||->  Uniform feature: 65, description: ((0, 0, 0), (1023, 1023, 1023), (1023, 1023, 1023), 'l1oc'), excluded_voxels=[] 
+||||||||->  Computing feature <aydin.features.groups.spatial.SpatialFeatures object at 0x000002F2414E3460>,  
+||||||||->  Spatial feature 0, offset=(0, 0, 0), scale=(9.994003597841295e-05, 0.014285714285714285, 0.014285714285714285), coarsening=2, period=0  
+||||||||->  Spatial feature 1, offset=(0, 0, 0), scale=(9.994003597841295e-05, 0.014285714285714285, 0.014285714285714285), coarsening=2, period=0  
+||||||||->  Spatial feature 2, offset=(0, 0, 0), scale=(9.994003597841295e-05, 0.014285714285714285, 0.014285714285714285), coarsening=2, period=0  
+||||||||->  Computing feature <aydin.features.groups.lowpass.LowPassFeatures object at 0x000002F2414E3B20>,  
+||||||||->  Correlative feature: 0 of shape=(5, 5, 5), excluded_voxels=[] 
+||||||||->  Correlative feature: 1 of shape=(7, 7, 7), excluded_voxels=[] 
+||||||||->  Correlative feature: 2 of shape=(7, 7, 7), excluded_voxels=[] 
+||||||||->  Correlative feature: 3 of shape=(7, 7, 7), excluded_voxels=[] 
+||||||||->  Correlative feature: 4 of shape=(7, 7, 7), excluded_voxels=[] 
+||||||||->  Correlative feature: 5 of shape=(9, 9, 9), excluded_voxels=[] 
+||||||||->  Correlative feature: 6 of shape=(9, 9, 9), excluded_voxels=[] 
+||||||||->  Correlative feature: 7 of shape=(9, 9, 9), excluded_voxels=[] 
+|||||||-<< 50.89 seconds 
+||||||| 
+||||||-<< 50.90 seconds 
+|||||| 
+|||||-<< 56.33 seconds 
+||||| 
+||||-<< 56.33 seconds 
+|||| 
+||||\  Predict from feature vector of dimension (49029400, 77) and dtype: float32: 
+|||||->  Predicting...  
+|||||\  CatBoost regressor prediction 
+||||||->  Number of data points             : 49029400 
+||||||->  Number of features per data points: 77 
+||||||->  Converting input to CatBoost's Pool format... 
+||||||\  CatBoost prediction now 
+||||||-<< 12.60 seconds 
+|||||| 
+||||||->  CatBoost regressor predicting done! 
+|||||-<< 12.60 seconds 
+||||| 
+|||||->  Reshaping array to (1, 1, 10006, 70, 70)...  
+||||-<< 12.67 seconds 
+|||| 
+||||->  Removing margins... 
+||||\  Array of shape: (1, 1, 10006, 70, 70) and dtype: float32 requested 
+|||||->  Array requested will be 196.1176 MB. 
+|||||->  There is 68349 MB of physical memory 
+|||||->  There is 25065 MB of swap memory 
+|||||->  There is 93414 MB of total memory 
+|||||->  There is enough physical+swap memory -- we do not need to use a mem mapped array or zarr-backed array. 
+||||-<< 1.00 milliseconds 
+|||| 
+||||->  Inserting translated batch into result image... 
+|||-<< 1.15 minutes 
+||| 
+|||\  transform postprocess 
+||||->  applying transform: PaddingTransform (pad_width=3, min_length_to_pad=8, mode=reflect) 
+||||\  Cropping array of shape: (10006, 70, 70) by removing padding of 3 voxels: 
+|||||->  Effective cropping widths: ((3, 3), (3, 3), (3, 3)) 
+||||-<< 0.00 microseconds 
+|||| 
+||||->  applying transform: RangeTransform (mode=minmax, percentile=None, leave_as_float=False, clip=True ) 
+||||\  Denormalizing value range (minmax) for array of shape: (10000, 64, 64) and dtype: float32 
+||||-<< 292.99 milliseconds 
+|||| 
+||||->  applying transform: VarianceStabilisationTransform (mode=anscomb) 
+||||\  Applying inverse variance stabilisation transform (anscomb) for array of shape: (10000, 64, 64) and dtype: float32 
+||||-<< 42.00 milliseconds 
+|||| 
+||||->  applying transform: FixedPatternTransform (percentile=1.0, sigma=0.5) 
+|||-<< 356.99 milliseconds 
+||| 
+||-<< 1.41 minutes 
+|| 
+|-<< 1.41 minutes 
+| 
+|->  DONE, results written in C:\Git\palmdenoiser_data\lowSNR_denoised3.tif 
