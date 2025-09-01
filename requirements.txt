@@ -16,12 +16,12 @@ ansi2html     # Convertisseur ANSI vers HTML
 
 # Dépendances de palm-denoisers installées avec pip
 csbdeep==0.8.1
-h5py==3.0.0
-numpy<2
+h5py==3.14.0
+numpy<3
 scipy
 pandas
 aydin==0.1.15
-imageio==2.21.1
-scikit-image==0.18.3
-tensorflow<2.11
+imageio==2.37.0
+scikit-image==0.24.0
+tensorflow<2.21
 customtkinter
