@@ -8,7 +8,7 @@ from csbdeep.io import load_training_data
 from csbdeep.models import Config, CARE
 
 
-data_pathway = 'model_HD_0.35.npz'
+data_pathway = 'care_data.npz'
 (X,Y), (X_val,Y_val), axes = load_training_data(data_pathway, validation_split=0.1, verbose=True)
 c = axes_dict(axes)['C']
 n_channel_in, n_channel_out = X.shape[c], Y.shape[c]
@@ -24,16 +24,16 @@ def show_some_data(X_val, Y_val):
 config = Config(axes, 
                 n_channel_in, 
                 n_channel_out, 
-                unet_kern_size=5, 
-                train_batch_size=32, 
-                train_steps_per_epoch=100, 
+                unet_kern_size=3, 
+                train_batch_size=16, 
+                train_steps_per_epoch=60, 
                 train_epochs=50, 
-                unet_n_depth=6, 
+                unet_n_depth=4, 
                 train_learning_rate=0.0004)
 
 print(config)
 vars(config)
-model = CARE(config, 'model_HD_0.35_depth', basedir='models')
+model = CARE(config, 'test_local', basedir='models')
 model.keras_model.summary()
 
 history = model.train(X,Y, validation_data=(X_val,Y_val))

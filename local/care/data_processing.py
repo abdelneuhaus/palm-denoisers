@@ -31,7 +31,7 @@ def show_paired_data(training_path, test_path):
     plt.show()
 
 
-raw_data = RawData.from_folder(basepath='local/care/Training', 
+raw_data = RawData.from_folder(basepath='C:/Git/palmdenoiser_data/data/Training', 
                                source_dirs=['Low'], 
                                target_dir='High', 
                                axes='YX')
@@ -40,7 +40,7 @@ X, Y, XY_axes = create_patches(raw_data=raw_data,
                                patch_size=(64,64), 
                                patch_filter=no_background_patches(0),
                                n_patches_per_image = 1, 
-                               save_file= 'local/care/care_data.npz')
+                               save_file= 'care_data.npz')
 assert X.shape == Y.shape
 
 print("shape of X,Y =", X.shape)
