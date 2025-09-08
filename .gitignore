@@ -175,4 +175,6 @@ reports/
 
 
 # Local testing
-./local/care/Training/
+models/
+.vscode/
+local/care/Training/
