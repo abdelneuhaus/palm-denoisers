@@ -131,8 +131,12 @@ celerybeat.pid
 .env
 .idea
 .venv
+.venv_care
+.venv_aydin
 env/
 venv/
+venv_care/
+venv_aydin/
 ENV/
 env.bak/
 venv.bak/
@@ -175,6 +179,6 @@ reports/
 
 
 # Local testing
-models/
 .vscode/
+.local
 local/care/Training/

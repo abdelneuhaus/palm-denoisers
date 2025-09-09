@@ -1,10 +1,13 @@
 import os
 import threading
+import subprocess
 import customtkinter as ctk
 import tifffile as tiff
 
+from pathlib import Path
 from .right_base import RightBaseFrame
-from palm_denoisers.care.preprocessing import launch_preprocessing_process, show_some_patches
+csbdeep_python = Path(__file__).parent.parent.parent.parent / "venv_care" / "Scripts" / "python.exe"
+preprocessing = Path(__file__).parent.parent.parent / "care" / "preprocessing.py"
 
 
 class Care2DFrame(RightBaseFrame):
@@ -58,19 +61,6 @@ class Care2DFrame(RightBaseFrame):
         self.selected_model.set(model_name)
         self.model_params_memory[model_name] = self.models[model_name].copy()
 
-    # def split_and_order_image(self):
-    #     if self.image_paths.get("low") is None or self.image_paths.get("high") is None:
-    #         print("Both Low and High images must be loaded before splitting.")
-    #         return
-    #     for image_type in ["low", "high"]:
-    #         stack = tiff.TiffFile(self.image_paths[image_type]).asarray()            
-    #         total_slices = stack.shape[0]
-    #         subfolder = "High" if image_type == "high" else "Low"
-    #         save_path = os.path.join(self.project_name, "data", "Training", subfolder)
-    #         os.makedirs(save_path, exist_ok=True)
-    #         for i in range(total_slices):
-    #             tiff.imwrite(os.path.join(save_path, f"Training_{i:04d}.tif"), stack[i])
-
     def split_and_order_image(self, callback=None):
         if self.image_paths.get("low") is None or self.image_paths.get("high") is None:
             print("Both Low and High images must be loaded before splitting.")
@@ -98,24 +88,19 @@ class Care2DFrame(RightBaseFrame):
             img_shape = tiff.imread(self.image_paths["low"]).shape[1]
             print("Launching preprocessing...")
 
-            def preprocessing_callback(result):
-                print("Preprocessing finished.")
-                print("Patch shapes:", result["shape"])
-                show_some_patches(result["preview_X"], result["preview_Y"], result["axes"])
-
-            # root is self because is the main tkinter window
-            launch_preprocessing_process(
-                project_folder=str(self.project_name + "/data/Training/"),
-                patch_size=img_shape,
-                patches_per_image=1,
-                save_file=str(self.project_name + "/model_data.npz"),
-                callback=preprocessing_callback,
-                root=self
-            )
-
+            cmd = [
+                csbdeep_python,
+                preprocessing,
+                str(self.project_name + "/data/Training/"),
+                str(img_shape),
+                str(1),
+                str(self.project_name + "/model_data.npz")
+            ]
+            subprocess.run(cmd, check=True)
+            
         # we keep split in thread bc its disk I/O
         self.split_and_order_image(callback=run_preprocessing)
-
+        print("Preprocessing finished")
 
 
     def launch_training(self):
